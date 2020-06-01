@@ -6,4 +6,4 @@ for i in pg.grid[0].len():
     pg.grid[i][j].x = x
     pg.grid[i][j].y = y
     point = gr.Point(x,y)
-    point.setfill()
+    point.setfill(color_rgb(255, 0, 0))
