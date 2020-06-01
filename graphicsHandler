@@ -3,7 +3,8 @@ import playGround.py as pg
 
 for i in pg.grid[0].len():
   for j in pg.grid[i].len():
-    pg.grid[i][j].x = x
-    pg.grid[i][j].y = y
-    point = gr.Point(x,y)
-    point.setfill(color_rgb(255, 0, 0))
+    if(pg.grid[i][j] != false):
+      pg.grid[i][j].x = x
+      pg.grid[i][j].y = y
+      point = gr.Point(x,y)
+      point.setfill(color_rgb(255, 0, 0))
