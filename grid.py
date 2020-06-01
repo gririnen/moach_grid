@@ -1,8 +1,8 @@
-def gen_grid(n):
+def genGrid(gridSide):
   grid = []
-  for i in range(n):
+  for i in range(gridSide):
     temp = []
-    for j in range(n):
+    for j in range(gridSide):
       temp.append(false)
     grid.append(temp)
   return grid
