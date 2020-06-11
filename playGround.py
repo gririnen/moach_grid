@@ -1,12 +1,10 @@
 import dot
-import grid
 #import graphicsHandler
 
-
-gridSide = int(input())
-grid = grid.genGrid(gridSide)
+# generates a grid with the input side length 
+gridSide = int(input("grid side:"))
+dot.genGrid(gridSide)
 
 d1 = dot.part(1,1)
-d1.step(1, 0)
-
-print(grid)
+d2 = dot.part(2,0)
+dot.printGrid()
