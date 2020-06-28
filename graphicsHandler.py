@@ -1,27 +1,19 @@
-from graphics import *
-import playGround as pg
-import grid
+import graphics as g
+def genGraphics(grid):
+    size = 500-(500%len(grid))
+    win = g.GraphWin("Grid", size, size)
+    win.setBackground('black')
+    k = size/len(grid)
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            if(grid[i][j] == True):
+                c = g.Circle(g.Point(k*i+k/2,k*j+k/2),k/2)
+                c.setFill('red')
+                c.draw(win)
+            else:
+                c = g.Circle(g.Point(k*i+k/2,k*j+k/2),k/2)
+                c.setFill('blue')
+                c.draw(win)
 
-win = GraphWin("Window", 100, 100)
-grid = grid.genGrid(10)
-
-def genGraphics():
-  #print(grid)
-  for i in range(10):
-    for j in range(10):
-      print(grid[i][j])
-      if(grid[i][j] = True):
-        print("Here")
-        x = grid[i][j].x
-        y = grid[i][j].y
-        point = Point(x,y)
-        cir = Circle(point, 1)
-        cir.setfill(color_rgb(255, 0, 0))
-        cir.draw(win)
-        win.getMouse()
-        win.close
-
-#print(grid)
-#genGraphics()
-print(" ")
-gridSide = int(input())
+    win.getMouse() # Pause to view result
+    win.close()
