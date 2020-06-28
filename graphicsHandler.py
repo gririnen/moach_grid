@@ -1,4 +1,5 @@
 import graphics as g
+import time
 def genGraphics(grid):
     size = 500-(500%len(grid))
     win = g.GraphWin("Grid", size, size)
@@ -15,5 +16,6 @@ def genGraphics(grid):
                 c.setFill('blue')
                 c.draw(win)
 
-    win.getMouse() # Pause to view result
+    #win.getMouse() # Pause to view result
+    time.sleep(0.5)
     win.close()
