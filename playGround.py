@@ -8,10 +8,13 @@ dot.genGrid(gridSide)
 gH.genGraphics(dot.returnGrid())
 
 dotLs = []
-dotLs.append(dot.part([4,4]))
-dotLs.append(dot.part([4,5]))
-dotLs.append(dot.part([5,4]))
-dotLs.append(dot.part([5,5]))
+def genMidSquare(side):
+	global dotLs
+	leftCorn = int((gridSide - side)/2)
+	for i in range(side**2):
+		dotLs.append(dot.part([int(leftCorn + i/side), leftCorn + i % side]))
+
+genMidSquare(3)
 
 gH.genGraphics(dot.returnGrid())
 while True:
