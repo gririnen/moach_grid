@@ -16,9 +16,8 @@ def genMidSquare(side):
 
 genMidSquare(3)
 
-gH.genGraphics(dot.returnGrid())
 while True:
+	gH.genGraphics(dot.returnGrid())
 	random.shuffle(dotLs) # important for not creating a bias twords one side
 	for d in dotLs:
 		d.step(dot.genStep())
-	gH.genGraphics(dot.returnGrid())
