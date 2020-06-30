@@ -1,7 +1,7 @@
 # create end() to kill the program 
 import grid
 import random
-
+killProgram = False
 
 gridSide = 0
 allow2dotsInTheSamePlace = False
@@ -36,6 +36,8 @@ def returnGrid():
 	return grid.data
 
 def end():
+	global killProgram
+	killProgram = True
 	print('killed program')
 
 def genStep():
