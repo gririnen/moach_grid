@@ -14,10 +14,15 @@ def genMidSquare(side):
 	for i in range(side**2):
 		dotLs.append(dot.part([int(leftCorn + i/side), leftCorn + i % side]))
 
-genMidSquare(3)
+genMidSquare(10)
 
-while True:
-	gH.genGraphics(dot.returnGrid())
+gH.genGraphics(dot.returnGrid())
+counter = 0
+while dot.killProgram == False:
+	counter += 1
 	random.shuffle(dotLs) # important for not creating a bias twords one side
 	for d in dotLs:
+		x,y = d.x,d.y
 		d.step(dot.genStep())
+		gH.drawStep(x,y,d.x,d.y)
+	#gH.genGraphics(dot.returnGrid())
