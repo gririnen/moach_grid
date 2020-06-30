@@ -5,7 +5,7 @@ import graphicsHandler as gH
 # generates a grid with the input side length 
 gridSide = int(input("grid side:"))
 dot.genGrid(gridSide)
-gH.genGraphics(dot.returnGrid())
+gH.initGraphics(dot.returnGrid())
 
 dotLs = []
 def genMidSquare(side):
