@@ -1,9 +1,16 @@
 import graphics as g
 import time
-def genGraphics(grid):
-    size = 500-(500%len(grid))
+
+size = 0
+win = g.GraphWin()
+
+def initGraphics(grid):
+    global win, size
+    size = 500 - (500 % len(grid))
     win = g.GraphWin("Grid", size, size)
     win.setBackground('black')
+
+def genGraphics(grid):
     k = size/len(grid)
     for i in range(len(grid)):
         for j in range(len(grid)):
@@ -18,4 +25,3 @@ def genGraphics(grid):
 
     #win.getMouse() # Pause to view result
     time.sleep(0.5)
-    win.close()
