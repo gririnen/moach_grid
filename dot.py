@@ -16,7 +16,7 @@ class part:
 	def step(self, ls):
 		x = ls[0]
 		y = ls[1]
-		if(self.x + x > gridSide or self.y + y > gridSide):
+		if((self.x + x > gridSide or self.x + x < 0) or (self.y + y > gridSide or self.y + y < 0)):
 			end()
 			return 0
 
