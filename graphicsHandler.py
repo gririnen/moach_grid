@@ -1,5 +1,6 @@
 import graphics as g
 import time
+from configFile import config
 
 size = 0
 win = g.GraphWin()
@@ -15,7 +16,7 @@ def initGraphics(grid):
 def genGraphics(grid):
     for i in range(len(grid)):
         for j in range(len(grid)):
-            if(grid[i][j] == True):
+            if(grid[i][j] == 1):
                 c = g.Circle(g.Point(k*i+k/2,k*j+k/2),k/2)
                 c.setFill('red')
                 c.draw(win)
@@ -29,7 +30,7 @@ def genGraphics(grid):
 
 def drawStep(x, y, dx, dy):
     c = g.Circle(g.Point(k * x + k / 2, k * y + k / 2), k / 2)
-    c.setFill('blue')
+    c.setFill('green') if config["colorSteppedPlaces"] else c.setFill('blue')
     c.draw(win)
     c = g.Circle(g.Point(k * dx + k / 2, k * dy + k / 2), k / 2)
     c.setFill('red')

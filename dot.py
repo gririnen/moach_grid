@@ -1,10 +1,11 @@
 # create end() to kill the program 
 import grid
 import random
-killProgram = False
+from configFile import config
 
+
+killProgram = False
 gridSide = 0
-allow2dotsInTheSamePlace = False
 
 class part:
 	"""docstring for dot"""
@@ -20,11 +21,11 @@ class part:
 			end()
 			return 0
 
-		if(allow2dotsInTheSamePlace or (not grid.data[self.x + x][self.y + y])): # checks that there isn't another point there already
-			grid.data[self.x][self.y] = False
+		if(config["allow2dotsInTheSamePlace"] or (grid.data[self.x + x][self.y + y]) != 1): # checks that there isn't another point there already
+			grid.data[self.x][self.y] = 2 # 0 is empty 1 has a dot on in 2 had a dot on it
 			self.x += x
 			self.y += y
-			grid.data[self.x][self.y] = True
+			grid.data[self.x][self.y] = 1
 
 
 def genGrid(i):
@@ -45,3 +46,5 @@ def genStep():
 		return [(1 if random.randint(0,1) else (-1)), 0]
 	else:
 		return [0, (1 if random.randint(0,1) else (-1))]
+
+

@@ -29,3 +29,4 @@ while dot.killProgram == False:
 		gH.drawStep(x,y,d.x,d.y)
 	#gH.genGraphics(dot.returnGrid())
 print("steps:", counter)
+print(dot.returnGrid())
