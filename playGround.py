@@ -1,13 +1,13 @@
 
 import dot
 import random
-#import graphicsHandler as gH
 import math
+from configFile import config
 
 # generates a grid with the input side length 
-gridSide = int(input("grid side:"))
+gridSide = config["gridSide"]
 dot.genGrid(gridSide)
-#gH.initGraphics(dot.returnGrid())
+
 
 dotLs = []
 def genMidSquare(side):
@@ -24,9 +24,20 @@ def genMidCircle(dim):
 			if((i - cntr)**2 + (j - cntr)**2 <=rad**2):
 				dotLs.append(dot.part([i, j]))
 
-genMidCircle(4)
+if(config["startingShape"] == "square"):
+	genMidSquare(config["diameterOrSide"])
 
-#gH.genGraphics(dot.returnGrid())
+elif(config["startingShape"] == "circle"):
+	genMidCircle(config["diameterOrSide"])
+
+else:
+	print("unknown shape in config['startingShape']")
+
+if(config["graphics"]):
+	import graphicsHandler as gH
+	gH.initGraphics(dot.returnGrid())
+	gH.genGraphics(dot.returnGrid())
+
 counter = 0
 while not dot.killProgram:
 	random.shuffle(dotLs) # important for not creating a bias twords one side
@@ -36,5 +47,6 @@ while not dot.killProgram:
 			break
 		x,y = d.x,d.y
 		d.step(dot.genStep())
-		#gH.drawStep(x,y,d.x,d.y)
+		if(config["graphics"]):
+			gH.drawStep(x,y,d.x,d.y)
 print("steps:", counter)
