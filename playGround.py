@@ -16,7 +16,8 @@ def genMidSquare(side):
 	for i in range(side**2):
 		dotLs.append(dot.part([int(leftCorn + i/side), leftCorn + i % side]))
 
-def genMidCircle(rad):
+def genMidCircle(dim):
+	rad = dim/2
 	cntr = int(gridSide/2)
 	for i in range(gridSide):
 		for j in range(gridSide):
