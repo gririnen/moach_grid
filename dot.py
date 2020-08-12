@@ -26,6 +26,8 @@ class part:
 			self.x += x
 			self.y += y
 			grid.data[self.x][self.y] = 1
+		elif(config["startingShape"] == "dot"):
+			grid.data[self.x][self.y] = 1
 
 
 def genGrid(i):

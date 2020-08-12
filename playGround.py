@@ -24,11 +24,19 @@ def genMidCircle(dim):
 			if((i - cntr)**2 + (j - cntr)**2 <=rad**2):
 				dotLs.append(dot.part([i, j]))
 
+def genDot(n):
+	cntr = int(gridSide/2)
+	for i in range(n):
+		dotLs.append(dot.part([cntr, cntr]))
+
 if(config["startingShape"] == "square"):
-	genMidSquare(config["diameterOrSide"])
+	genMidSquare(config["diameterSideOrNumberOfDots"])
 
 elif(config["startingShape"] == "circle"):
-	genMidCircle(config["diameterOrSide"])
+	genMidCircle(config["diameterSideOrNumberOfDots"])
+
+elif(config["startingShape"] == "dot"):
+	genDot(config["diameterSideOrNumberOfDots"])
 
 else:
 	print("unknown shape in config['startingShape']")
