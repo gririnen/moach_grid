@@ -12,7 +12,7 @@ class part:
 	def __init__(self, ls):
 		self.x = ls[0]
 		self.y = ls[1]
-		self.step([0, 0]) # used for updating grid.data
+		self.step([0, 0]) # used to update grid.data and not for actually stepping
 
 	def step(self, ls):
 		x = ls[0]
@@ -25,8 +25,6 @@ class part:
 			grid.data[self.x][self.y] = 2 # 0 is empty 1 has a dot on in 2 had a dot on it
 			self.x += x
 			self.y += y
-			grid.data[self.x][self.y] = 1
-		elif(config["startingShape"] == "dot"):
 			grid.data[self.x][self.y] = 1
 
 
@@ -41,7 +39,7 @@ def returnGrid():
 def end():
 	global killProgram
 	killProgram = True
-	print('killed program')
+	grid.data = []
 
 def genStep():
 	if (random.randint(0, 1)):

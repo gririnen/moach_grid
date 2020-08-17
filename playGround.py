@@ -1,4 +1,4 @@
-
+import matplotlib.pyplot as plt
 import dot
 import random
 import math
@@ -6,10 +6,24 @@ from configFile import config
 
 # generates a grid with the input side length 
 gridSide = config["gridSide"]
-dot.genGrid(gridSide)
+runs = 1
 
+if("AvgRms" in config["experiments"]):
+	runs = int(input("How many runs: "))
+lastRmsSum = 0
 
-dotLs = []
+RmsGraph = False
+if("RmsGraph" in config["experiments"]):
+	RmsGraph = True
+
+def rms():
+	squareSum = 0
+	cntr = int(gridSide/2)
+	for i in dotLs:
+		squareSum += (i.x-cntr)**2
+		squareSum += (i.y-cntr)**2
+	return math.sqrt(squareSum/len(dotLs))
+
 def genMidSquare(side):
 	global dotLs
 	leftCorn = int((gridSide - side)/2)
@@ -24,37 +38,50 @@ def genMidCircle(dim):
 			if((i - cntr)**2 + (j - cntr)**2 <=rad**2):
 				dotLs.append(dot.part([i, j]))
 
-def genDot(n):
-	cntr = int(gridSide/2)
-	for i in range(n):
-		dotLs.append(dot.part([cntr, cntr]))
 
-if(config["startingShape"] == "square"):
-	genMidSquare(config["diameterSideOrNumberOfDots"])
+for i in range(runs):
 
-elif(config["startingShape"] == "circle"):
-	genMidCircle(config["diameterSideOrNumberOfDots"])
+	dot.genGrid(gridSide)
+	rmsLs = []
+	dotLs = []
 
-elif(config["startingShape"] == "dot"):
-	genDot(config["diameterSideOrNumberOfDots"])
+	if(config["startingShape"] == "square"):
+		genMidSquare(config["diameterOrSide"])
 
-else:
-	print("unknown shape in config['startingShape']")
+	elif(config["startingShape"] == "circle"):
+		genMidCircle(config["diameterOrSide"])
 
-if(config["graphics"]):
-	import graphicsHandler as gH
-	gH.initGraphics(dot.returnGrid())
-	gH.genGraphics(dot.returnGrid())
+	else:
+		print("unknown shape in config['startingShape']")
 
-counter = 0
-while not dot.killProgram:
-	random.shuffle(dotLs) # important for not creating a bias twords one side
-	counter += 1
-	for d in dotLs:
-		if(dot.killProgram):
-			break
-		x,y = d.x,d.y
-		d.step(dot.genStep())
-		if(config["graphics"]):
-			gH.drawStep(x,y,d.x,d.y)
-print("steps:", counter)
+	if("graphics" in config["experiments"]):
+		import graphicsHandler as gH
+		gH.initGraphics(dot.returnGrid())
+		gH.genGraphics(dot.returnGrid())
+
+
+	while not dot.killProgram:
+		random.shuffle(dotLs) # important for not creating a bias twords one side
+		if(RmsGraph):
+			rmsLs.append(rms())
+		for d in dotLs:
+			if(dot.killProgram):
+				break
+			x,y = d.x,d.y
+			d.step(dot.genStep())
+			if("graphics" in config["experiments"]):
+				gH.drawStep(x,y,d.x,d.y)
+
+	if(RmsGraph and runs == i + 1):
+		print("All ", runs, " runs executed successfully, you should now see the RMS graph of the last one.")
+		import matplotlib.pyplot as plt
+		plt.plot(rmsLs)
+		plt.plot([j**0.5 for j in range(int(rmsLs[0]**2), len(rmsLs) + int(rmsLs[0]**2))])
+		plt.xlabel('Iterations')
+		plt.ylabel('RMS (blue) and Square root of iterations (orange)')
+		plt.show()
+
+	lastRmsSum += rms()
+	dot.killProgram = False
+
+print("The average RMS at the end of the experiment is: ", str(lastRmsSum / runs))
