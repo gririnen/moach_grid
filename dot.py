@@ -19,6 +19,7 @@ class part:
 		y = ls[1]
 		if((self.x + x >= gridSide or self.x + x < 0) or (self.y + y >= gridSide or self.y + y < 0)):
 			end()
+			#print("dot.py killed the program because a dot tried to step out of the grid.")
 			return 0
 
 		if(config["allow2dotsInTheSamePlace"] or (grid.data[self.x + x][self.y + y]) != 1): # checks that there isn't another point there already

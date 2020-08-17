@@ -5,7 +5,12 @@ import math
 from configFile import config
 
 # generates a grid with the input side length 
-gridSide = config["gridSide"]
+if(config["stepsOrReachedEnd"] == "reachedEnd"):
+	gridSide = config["gridSideOrSteps"]
+elif(config["stepsOrReachedEnd"] == "steps"):
+	gridSide = config["gridSideOrSteps"] + config["diameterOrSide"]
+else:
+	print("bad value in stepsOrReachedEnd")
 runs = 1
 
 if("AvgRms" in config["experiments"]):
@@ -59,7 +64,8 @@ for i in range(runs):
 		gH.initGraphics(dot.returnGrid())
 		gH.genGraphics(dot.returnGrid())
 
-
+	counter = 0
+	dot.killProgram = False
 	while not dot.killProgram:
 		random.shuffle(dotLs) # important for not creating a bias twords one side
 		if(RmsGraph):
@@ -67,10 +73,15 @@ for i in range(runs):
 		for d in dotLs:
 			if(dot.killProgram):
 				break
+			if(config["stepsOrReachedEnd"] == "steps" and counter >= config["gridSideOrSteps"]):
+				dot.end()
+				#print("success: playGround.py killed the program because it ran out of steps.")
+				break
 			x,y = d.x,d.y
 			d.step(dot.genStep())
 			if("graphics" in config["experiments"]):
 				gH.drawStep(x,y,d.x,d.y)
+		counter += 1
 
 	if(RmsGraph and runs == i + 1):
 		print("All ", runs, " runs executed successfully, you should now see the RMS graph of the last one.")
@@ -82,6 +93,5 @@ for i in range(runs):
 		plt.show()
 
 	lastRmsSum += rms()
-	dot.killProgram = False
 
 print("The average RMS at the end of the experiment is: ", str(lastRmsSum / runs))
