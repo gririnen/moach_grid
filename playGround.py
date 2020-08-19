@@ -8,7 +8,7 @@ from configFile import config
 if(config["stepsOrReachedEnd"] == "reachedEnd"):
 	gridSide = config["gridSideOrSteps"]
 elif(config["stepsOrReachedEnd"] == "steps"):
-	gridSide = config["gridSideOrSteps"] + config["diameterOrSide"]
+	gridSide = config["gridSideOrSteps"]*2 + config["diameterOrSide"] + 1# makes the grid too large for any dot to step out of it with the number of steps it has
 else:
 	print("bad value in stepsOrReachedEnd")
 runs = 1
@@ -84,7 +84,7 @@ for i in range(runs):
 		counter += 1
 
 	if(RmsGraph and runs == i + 1):
-		print("All ", runs, " runs executed successfully, you should now see the RMS graph of the last one.")
+		print("You should now see the RMS graph of the last run.")
 		import matplotlib.pyplot as plt
 		plt.plot(rmsLs)
 		plt.plot([j**0.5 for j in range(int(rmsLs[0]**2), len(rmsLs) + int(rmsLs[0]**2))])
@@ -94,4 +94,4 @@ for i in range(runs):
 
 	lastRmsSum += rms()
 
-print("The average RMS at the end of the experiment is: ", str(lastRmsSum / runs))
+print("The average RMS at the end of the experiment, of all the ", runs," runs is: ", str(lastRmsSum / runs))
