@@ -15,7 +15,7 @@ runs = 1
 
 if("AvgRms" in config["experiments"]):
 	runs = int(input("How many runs: "))
-lastRmsSum = 0
+lastRmsLs = []
 
 RmsGraph = False
 if("RmsGraph" in config["experiments"]):
@@ -92,6 +92,12 @@ for i in range(runs):
 		plt.ylabel('RMS (blue) and Square root of iterations (orange)')
 		plt.show()
 
-	lastRmsSum += rms()
+	lastRmsLs.append(rms())
 
-print("The average RMS at the end of the experiment, of all the ", runs," runs is: ", str(lastRmsSum / runs))
+if(runs > 1):
+	import numpy
+	print("The average RMS at the end of the experiment, of all the ", runs," runs is: ", str(sum(lastRmsLs) / runs))
+	print("The standard deviation is: ", numpy.std(lastRmsLs))
+
+else:
+	print("The RMS at the end of the experiment was: ", str(lastRmsLs[0]))
