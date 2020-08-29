@@ -54,7 +54,7 @@ def end():
 def genStep():
 	"""genStep() -> [int,int]
 	returns list with x,y values of step, one out of four directions at random"""
-	if (random.randint(0, 1)): #if 0 the part moves on y axis, if 1 the part moves on the y axis
+	if (random.randint(0, 1)): #if 0 the part moves on y axis, if 1 the part moves on the x axis
 		return [(1 if random.randint(0,1) else (-1)), 0] #if 0 the part moves to the negative direction, positive if 1
 	else:
 		return [0, (1 if random.randint(0,1) else (-1))] #if 0 the part moves to the negative direction, positive if 1
