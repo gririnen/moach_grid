@@ -87,7 +87,7 @@ for i in range(runs*2):
 falseDevTrue /= avg(RmsLss2)
 
 plt.plot(falseDevTrue)
-plt.xlabel('steps')
-plt.ylabel("The average rms at the end of the experiment, (new model) ÷ (old model)")
+plt.xlabel('Iterations')
+plt.ylabel("The average RMS at the end of the experiment, (new model) ÷ (old model)")
 plt.show()
 
