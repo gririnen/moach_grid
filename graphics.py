@@ -1,4 +1,4 @@
-# graphics.py
+# we didn't write this file, it's an open source free-software we use as our graphical engine
 """Simple object oriented graphics library  
 
 The library is designed to make it very easy for novice programmers to
