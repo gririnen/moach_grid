@@ -40,7 +40,8 @@ def genMidCircle(dim):
 			if((i - cntr)**2 + (j - cntr)**2 <=rad**2): #checks if particle is inside the circle with given diameter
 				dotLs.append(dot.part([i, j])) #appends particle to dotLs
 def avg(ls):
-	"""avg(float[]) -> float
+	"""avg(list) -> numpy array
+	ls is a list containing numpy arrays with the same lengths filled with floats, avg(ls) returns a numpy array so that avg(ls)[n] is the average value of all the floats contained in the n-th elements of the arrays containd in ls.
 	"""
 	sumArr = np.array([0 for i in range(steps+1)], dtype=np.float)
 	for l in ls:
@@ -48,18 +49,18 @@ def avg(ls):
 
 	return sumArr / len(ls)
 
-RmsLss2 = []
+RmsLss2 = [] # going to contain the numpy arrays containing the RMS values
 gridSide = steps*2 + config["diameterOrSide"] + 1 # makes the grid too large for any dot to step out of it with the number of steps it has
 config["allow2dotsInTheSamePlace"] = False #sets model type
 for i in range(runs*2):
-	#runs twice the number of runs as we want two results for the same config
-	RmsLs = np.array([], dtype=np.float)
+	#loops through twice the number of inputted runs, as we want to loop through runs iterations for each model type 
+	RmsLs = np.array([], dtype=np.float) #a numpy array that's going to contain the RMS values for the run
  
 	dot.genGrid(gridSide) #generates grid.data
-	rmsLs = [] #completely resets rmsLs and dotLs at the beggining of each run
 	dotLs = []
-
-	if(config["startingShape"] == "square"):
+	
+	# creates the starting shape
+	if(config["startingShape"] == "square"): 
 		genMidSquare(config["diameterOrSide"])
 
 	elif(config["startingShape"] == "circle"):
@@ -68,32 +69,33 @@ for i in range(runs*2):
 	else:
 		print("unknown shape in config['startingShape']")
 
+	
 	counter = 0
 	dot.killProgram = False
-	while not dot.killProgram:
+	while not dot.killProgram: #loops indefienetly until max steps reached or particle reached the end (not supposed to happen in this case but is still here to avoid err)
 		random.shuffle(dotLs) # important for not creating a bias twords one side
 		for d in dotLs:
+			#loops for every particle
 			if(dot.killProgram):
 				break
 			if(counter >= steps):
-				dot.end()
-				#print("success: playGround.py killed the program because it ran out of steps.")
+				dot.end() #kills program if max number of steps was reached
 				break
-			x,y = d.x,d.y
-			d.step(dot.genStep())
+			d.step(dot.genStep()) #particle takes a step
 
 		counter += 1
-		RmsLs = np.append(RmsLs, rms())
+		RmsLs = np.append(RmsLs, rms()) # adds the current RMS to Rmsls
 	RmsLss2.append(RmsLs)
-	if(runs == i + 1):
-		config["allow2dotsInTheSamePlace"] = True
-		falseDevTrue = avg(RmsLss2)
-		RmsLss2 = []
+	if(runs == i + 1): # when half the iterations already executed (after runs iterations):
+		config["allow2dotsInTheSamePlace"] = True # switch to the standart model
+		falseDevTrue = avg(RmsLss2) # feed falseDevTrue with the average RMS numpy array for the alternative model
+		RmsLss2 = [] # clear RmsLss2 so that data for the standart model can come in instead of data for the alternative model
 
 
 
-falseDevTrue /= avg(RmsLss2)
+falseDevTrue /= avg(RmsLss2) # calculates the proportion between the average RMS of the alternative model to the average RMS of the standart model
 
+# plots the graph
 plt.plot(falseDevTrue)
 plt.xlabel('Iterations')
 plt.ylabel("The average RMS at the end of the experiment, (new model) ÷ (old model)")
