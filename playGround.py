@@ -112,7 +112,7 @@ for i in range(runs):
 if(runs > 1):
 	import numpy
 	print("The average RMS at the end of the experiment, of all the ", runs," runs is: ", str(sum(lastRmsLs) / runs)) #prints avarage RMS of the last grid state
-	print("The standard deviation is: ", numpy.std(lastRmsLs)) #prints standard deviation of the last grid state
+	print("The standard deviation is: ", numpy.std(lastRmsLs)) #prints standard deviation of the last grid state RMS
 
 else:
 	print("The RMS at the end of the experiment was: ", str(lastRmsLs[0])) #prints RMS of the last grid state
